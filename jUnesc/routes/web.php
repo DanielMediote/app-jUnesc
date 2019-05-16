@@ -18,3 +18,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/apresentacao', 'Site/SiteControll@apresentacao')->name('site.apresentacao');
+# Rotas Protegidas
+Route::group(
+    [
+        'middleware' => ['auth'],
+        'prefix' => 'admin'
+    ],
+    function () {
+        Route::resources([
+            'author' => 'Admin\AuthorController',
+            'event' => 'Admin\EventController',
+            'presentation' => 'Admin\PresentationController',
+            'type' => 'Admin\TypeController',
+        ]);
+    }
+);

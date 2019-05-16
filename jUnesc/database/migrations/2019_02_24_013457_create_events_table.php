@@ -14,11 +14,15 @@ class CreateEventsTable extends Migration
     public function up()
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string("name", 150);
-            $table->integer("journey_id")->unsigned();
-            $table->foreign("journey_id")->references("id")->on("journeys")->onDelete("cascade");
-            $table->text("description");
+            $table->bigIncrements('id');
+            $table->string('name',150);
+            $table->date('start');
+            $table->date('end');
+            $table->date('dateRegistration');
+            $table->date('dateSubmission');
+            $table->string('registration',200);
+            $table->string('submission',200);
+            $table->boolean('active');
             $table->timestamps();
         });
     }

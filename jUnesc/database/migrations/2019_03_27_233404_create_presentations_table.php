@@ -14,12 +14,16 @@ class CreatePresentationsTable extends Migration
     public function up()
     {
         Schema::create('presentations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 100);
-            $table->string('authors', 150);
-            $table->string('resume', 200);
-            $table->string('local', 100);
-            $table->integer('vacant');
+            $table->bigIncrements('id');
+            $table->bigInteger('event_id')->unsigned();
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+            $table->bigInteger('type_id')->unsigned();
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->string('name',150);
+            $table->date('date');
+            $table->text('description');
+            $table->string('location');
+            $table->integer('vacancy');
             $table->timestamps();
         });
     }

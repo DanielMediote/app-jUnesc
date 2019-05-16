@@ -1,12 +1,26 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Jornada\Http\Controllers\Admin;
 
-use App\Journey;
 use Illuminate\Http\Request;
+use Jornada\Admin\Presentation;
+use Jornada\Admin\Type;
+use Jornada\Http\Controllers\Controller;
 
-class JourneyController extends Controller
+
+class PresentationController extends Controller
 {
+    protected $presentation;
+    protected $type;
+
+    public function __construct(
+        Presentation $presentation, Type $type)
+    {
+        $this->presentation = $presentation;
+        $this->type = $type;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,11 @@ class JourneyController extends Controller
      */
     public function index()
     {
-        //
+        $presentations = 
+            $this->presentation->orderBy('name')
+            ->paginate();
+        return view('admin.presentation.index', 
+        compact('presentations'));
     }
 
     /**
@@ -24,7 +42,10 @@ class JourneyController extends Controller
      */
     public function create()
     {
-        //
+        $types = $this->type->orderBy('name')
+        ->pluck('name','id');
+        dd($types);
+        return view('admin.presentation.create');
     }
 
     /**
@@ -41,10 +62,10 @@ class JourneyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Journey  $journey
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Journey $journey)
+    public function show($id)
     {
         //
     }
@@ -52,10 +73,10 @@ class JourneyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Journey  $journey
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Journey $journey)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +85,10 @@ class JourneyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Journey  $journey
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Journey $journey)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +96,10 @@ class JourneyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Journey  $journey
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Journey $journey)
+    public function destroy($id)
     {
         //
     }
